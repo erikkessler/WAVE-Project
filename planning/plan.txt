@@ -1,0 +1,32 @@
+Memory
+	WARM --> 0x0
+	need to check if instruction == 0
+
+Registers:
+	r0 --> 0(rp)
+	...
+	r15 --> 15(rp)
+	rp = sp - 1
+	gonna do (rp + register)then rp - register
+
+	Specific cases:
+		 sp - 0x00ffffff
+Program Counter:
+	mov	WARM(wpc), r0
+	increment wpc and r15(rp)
+
+Condition Bits:
+	  clear and copy from wind
+All 
+    Condition codes - check before
+    	      mask then goto place where do the checking
+	      need to determine if gonna set them - ?
+The Arithmetic Format
+    Look for 0 @ 27
+    Mask opcode, dest, src, src right
+    Jump based on opcode
+
+    Imeddiate mode
+    	      look for 0 @ 14
+	      need value then shift by exponent - masks
+	   

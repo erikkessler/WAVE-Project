@@ -1,0 +1,786 @@
+WIND Assembly of wave2.s                                                Page 1
+
+Line [ Addr ]
+0001           ;;; Phase 2 of the final project.
+0002           ;;; (c) 2014 Erik Kessler
+0003 [0x0000]:         .requ   wpc,r15
+0004 [0x0000]:         .requ   ins,r14
+0005 [0x0000]:         .requ   cc,r13
+0006 [0x0000]:         .requ   lreg,r11
+0007 [0x0000]:         .requ   rreg1,r10
+0008 [0x0000]:         .requ   rvalue,r9
+0009 [0x0000]:         .requ   opcode,r8
+0010 [0x0000]:         .requ   arthss,r7       ; Arth second source
+0011 [0x0000]:         .requ   shop,r7
+0012 [0x0000]:         .requ   srcr2,r6
+0013 [0x0000]:         .requ   shiftcount,r5
+0014 [0x0000]:         .requ   ncc,r7
+0015 [0x0000]:         .requ   expon,r7
+0016                   
+0017 [0x0000]:         .equ    sp,13
+0018 [0x0000]:         .equ    pc,15
+0019 [0x0000]:         .equ    wr0,0
+0020 [0x0000]:         .equ    wr1,1
+0021                   
+0022 [0x0000]:         .equ    eqb,0x40000000
+0023 [0x0000]:         .equ    ltb,0x90000000
+0024 [0x0000]:         .equ    scc,0x10000000
+0025 [0x0000]:         .equ    lregm,0x7800000
+0026 [0x0000]:         .equ    rreg1m,0x780000
+0027 [0x0000]:         .equ    opcodem,0x78000000
+0028                   
+0029 [0x0000]:         .equ    ccalign,16
+0030 [0x0000]:         .equ    shopalign,32
+0031 [0x0000]:         .equ    opalign,16
+0032 [0x0000]:         .equ    swialign,16
+0033 [0x0000]:         jmp     start
+     [0x0000]: 08198000 0000000f          
+0034                   
+0035 [0x0002]:         .origin 16              ; Make room for registers
+0036 [0x0010]: start:  mov     $0x00ffffff,sp  ; Set sp to the highest value
+     [0x0010]: 4e780000 00ffffff fffffffb 
+0037 [0x0013]:         mov     $0,wr0
+     [0x0013]: 4e780000 00000000 ffffffeb 
+0038 [0x0016]:         mov     $0,wr1
+     [0x0016]: 4e780000 00000000 ffffffe9 
+0039 [0x0019]:         lea     WARM,r0         
+     [0x0019]: 40198000 0000036e          
+0040 [0x001b]:         trap    $SysOverlay     ; Load warm code into memory
+     [0x001b]: 00180000 00000006          
+0041                   
+0042 [0x001d]: get:    mov     WARM(wpc),ins   ; Get instruction
+     [0x001d]: 49cf8000 00000388          
+0043 [0x001f]:         mov     ins,cc          ; Get the instructions conditions
+     [0x001f]: 49a70000                   
+0044 [0x0020]:         shr     $29,cc          ; cc low 3 bits
+     [0x0020]: c9b80000 0000001d          
+0045 [0x0022]:         lea     ccops,r0
+     [0x0022]: 40198000 0000035d          
+0046 [0x0024]:         add     cc,r0
+     [0x0024]: a0068000                   
+0047 [0x0025]:         mov     (r0),rip
+     [0x0025]: 4e480000 00000000          
+0048           
+WIND Assembly of wave2.s                                                Page 2
+
+Line [ Addr ]
+0049 [0x0027]:         .align ccalign
+0050 [0x0030]: always: jmp     asb
+     [0x0030]: 08198000 0000007b          
+0051 [0x0032]:         .align ccalign
+0052 [0x0040]: nv:     jmp     next
+     [0x0040]: 08198000 00000338          
+0053 [0x0042]:         .align ccalign
+0054 [0x0050]: eq:     mov     pc,cc
+     [0x0050]: 49b98000 ffffffbe          
+0055 [0x0052]:         test    $eqb,cc
+     [0x0052]: d9b80000 40000000          
+0056 [0x0054]:         je      next
+     [0x0054]: 20198000 00000324          
+0057 [0x0056]:         jmp     asb
+     [0x0056]: 08198000 00000055          
+0058 [0x0058]:         .align ccalign
+0059 [0x0060]: ne:     mov     pc,cc
+     [0x0060]: 49b98000 ffffffae          
+0060 [0x0062]:         test    $eqb,cc
+     [0x0062]: d9b80000 40000000          
+0061 [0x0064]:         jne     next
+     [0x0064]: 28198000 00000314          
+0062 [0x0066]:         jmp     asb
+     [0x0066]: 08198000 00000045          
+0063 [0x0068]:         .align ccalign
+0064 [0x0070]: lt:     mov     pc,cc
+     [0x0070]: 49b98000 ffffff9e          
+0065 [0x0072]:         and     $ltb,cc
+     [0x0072]: 81b80000 90000000          
+0066 [0x0074]:         je      next
+     [0x0074]: 20198000 00000304          
+0067 [0x0076]:         cmp     $ltb,cc
+     [0x0076]: 99b80000 90000000          
+0068 [0x0078]:         je      next
+     [0x0078]: 20198000 00000300          
+0069 [0x007a]:         jmp     asb
+     [0x007a]: 08198000 00000031          
+0070 [0x007c]:         .align  ccalign
+0071 [0x0080]: le:     mov     pc,cc
+     [0x0080]: 49b98000 ffffff8e          
+0072 [0x0082]:         and     $ltb,cc
+     [0x0082]: 81b80000 90000000          
+0073 [0x0084]:         je      next
+     [0x0084]: 20198000 000002f4          
+0074 [0x0086]:         cmp     $ltb,cc
+     [0x0086]: 99b80000 90000000          
+0075 [0x0088]:         je      next
+     [0x0088]: 20198000 000002f0          
+0076 [0x008a]:         jmp     eq
+     [0x008a]: 08198000 ffffffc5          
+0077 [0x008c]:         .align ccalign
+0078 [0x0090]: ge:     mov     pc,cc
+     [0x0090]: 49b98000 ffffff7e          
+0079 [0x0092]:         and     $ltb,cc
+     [0x0092]: 81b80000 90000000          
+0080 [0x0094]:         je      asb
+     [0x0094]: 20198000 00000017          
+0081 [0x0096]:         cmp     $ltb,cc
+     [0x0096]: 99b80000 90000000          
+0082 [0x0098]:         je      asb
+WIND Assembly of wave2.s                                                Page 3
+
+Line [ Addr ]
+     [0x0098]: 20198000 00000013          
+0083 [0x009a]:         jmp     next
+     [0x009a]: 08198000 000002de          
+0084 [0x009c]:         .align ccalign
+0085 [0x00a0]: gt:     mov     pc,cc
+     [0x00a0]: 49b98000 ffffff6e          
+0086 [0x00a2]:         and     $ltb,cc
+     [0x00a2]: 81b80000 90000000          
+0087 [0x00a4]:         je      ne
+     [0x00a4]: 20198000 ffffffbb          
+0088 [0x00a6]:         cmp     ltb,cc
+     [0x00a6]: 99b98000 8fffff59          
+0089 [0x00a8]:         je      ne
+     [0x00a8]: 20198000 ffffffb7          
+0090 [0x00aa]:         jmp     next
+     [0x00aa]: 08198000 000002ce          
+0091                   
+0092                   
+0093           
+0094 [0x00ac]: asb:    mov     ins,cc          ; Store if need to set cc
+     [0x00ac]: 49a70000                   
+0095 [0x00ad]:         and     $scc,cc
+     [0x00ad]: 81b80000 10000000          
+0096 [0x00af]:         shl     $4,ins
+     [0x00af]: c1d80000 00000004          
+0097 [0x00b1]:         jl      sb              ; It load/store or branch
+     [0x00b1]: 10198000 000002a2          
+0098 [0x00b3]:         mov     ins,opcode      ; Get opcode
+     [0x00b3]: 49070000                   
+0099 [0x00b4]:         and     $opcodem,opcode
+     [0x00b4]: 81180000 78000000          
+0100 [0x00b6]:         shr     $27,opcode
+     [0x00b6]: c9180000 0000001b          
+0101 [0x00b8]:         mov     ins,lreg        ; Get left reg
+     [0x00b8]: 49670000                   
+0102 [0x00b9]:         and     $lregm,lreg
+     [0x00b9]: 81780000 07800000          
+0103 [0x00bb]:         shr     $23,lreg
+     [0x00bb]: c9780000 00000017          
+0104 [0x00bd]:         mov     ins,rreg1       ; Get right reg
+     [0x00bd]: 49470000                   
+0105 [0x00be]:         and     $rreg1m,rreg1
+     [0x00be]: 81580000 00780000          
+0106 [0x00c0]:         shr     $19,rreg1
+     [0x00c0]: c9580000 00000013          
+0107 [0x00c2]:         shl     $13,ins
+     [0x00c2]: c1d80000 0000000d          
+0108 [0x00c4]:         jge     immed           ; immediate
+     [0x00c4]: 30198000 000000c1          
+0109 [0x00c6]:         mov     ins,arthss
+     [0x00c6]: 48e70000                   
+0110 [0x00c7]:         shr     $29,arthss
+     [0x00c7]: c8f80000 0000001d          
+0111 [0x00c9]:         mov     ins,srcr2
+     [0x00c9]: 48c70000                   
+0112 [0x00ca]:         shl     $5,srcr2
+     [0x00ca]: c0d80000 00000005          
+0113 [0x00cc]:         shr     $28,srcr2       ; src reg 2
+     [0x00cc]: c8d80000 0000001c          
+0114 [0x00ce]:         mov     ins,shiftcount
+WIND Assembly of wave2.s                                                Page 4
+
+Line [ Addr ]
+     [0x00ce]: 48a70000                   
+0115 [0x00cf]:         shl     $9,shiftcount
+     [0x00cf]: c0b80000 00000009          
+0116 [0x00d1]:         shr     $26,shiftcount  ; shiftcount
+     [0x00d1]: c8b80000 0000001a          
+0117 [0x00d3]:         mov     (srcr2),rvalue
+     [0x00d3]: 492b0000 00000000          
+0118 [0x00d5]:         cmp     $6,arthss       ; reg product?
+     [0x00d5]: 98f80000 00000006          
+0119 [0x00d7]:         jl      shift
+     [0x00d7]: 10198000 00000005          
+0120           
+0121 [0x00d9]:         mul     (shiftcount),rvalue ; reg product
+     [0x00d9]: b12a8000 00000000          
+0122 [0x00db]:         jmp     op
+     [0x00db]: 08198000 000000b5          
+0123                   
+0124                   
+0125 [0x00dd]: shift:  cmp     $0b101,arthss
+     [0x00dd]: 98f80000 00000005          
+0126 [0x00df]:         cmove   (shiftcount),shiftcount 
+     [0x00df]: 60aa8000 00000000          
+0127 [0x00e1]:         mov     ins,shop        ; need shop
+     [0x00e1]: 48e70000                   
+0128 [0x00e2]:         shl     $3,shop
+     [0x00e2]: c0f80000 00000003          
+0129 [0x00e4]:         shr     $30,shop
+     [0x00e4]: c8f80000 0000001e          
+0130 [0x00e6]:         mul     $shopalign,shop
+     [0x00e6]: b0f80000 00000020          
+0131 [0x00e8]:         lea     lsl,r0
+     [0x00e8]: 40198000 00000017          
+0132 [0x00ea]:         add     shop,r0
+     [0x00ea]: a0038000                   
+0133 [0x00eb]:         mov     r0,rip
+     [0x00eb]: 4e400000                   
+0134           
+0135 [0x00ec]:         .align shopalign
+0136 [0x0100]: lsl:    shl     shiftcount,rvalue
+     [0x0100]: c1228000                   
+0137 [0x0101]:         mov     pc,ncc
+     [0x0101]: 48f98000 ffffff0d          
+0138 [0x0103]:         jmp     setcc
+     [0x0103]: 08198000 00000075          
+0139           
+0140 [0x0105]:         .align shopalign
+0141 [0x0120]:         shr     shiftcount,rvalue
+     [0x0120]: c9228000                   
+0142 [0x0121]:         mov     pc,ncc
+     [0x0121]: 48f98000 fffffeed          
+0143 [0x0123]:         jmp     setcc
+     [0x0123]: 08198000 00000055          
+0144           
+0145 [0x0125]:         .align shopalign
+0146 [0x0140]:         sar     shiftcount,rvalue
+     [0x0140]: d1228000                   
+0147 [0x0141]:         mov     pc,ncc
+     [0x0141]: 48f98000 fffffecd          
+0148 [0x0143]:         jmp     setcc
+     [0x0143]: 08198000 00000035          
+WIND Assembly of wave2.s                                                Page 5
+
+Line [ Addr ]
+0149           
+0150 [0x0145]:         .align  shopalign
+0151 [0x0160]: ror:    cmp     $0,shiftcount
+     [0x0160]: 98b80000 00000000          
+0152 [0x0162]:         jle     setccr
+     [0x0162]: 18198000 0000000f          
+0153 [0x0164]:         shr     $1,rvalue
+     [0x0164]: c9380000 00000001          
+0154 [0x0166]:         mov     ccr,ncc
+     [0x0166]: 48fa0000                   
+0155 [0x0167]:         test    $2,ncc
+     [0x0167]: d8f80000 00000002          
+0156 [0x0169]:         mov     $0x80000000,r0
+     [0x0169]: 48180000 80000000          
+0157 [0x016b]:         cmove   $0,r0
+     [0x016b]: 60180000 00000000          
+0158 [0x016d]:         add     r0,rvalue
+     [0x016d]: a1200000                   
+0159 [0x016e]:         sub     $1,shiftcount
+     [0x016e]: a8b80000 00000001          
+0160 [0x0170]:         jmp     ror
+     [0x0170]: 08198000 ffffffef          
+0161           
+0162 [0x0172]: setccr: test    $2,ncc
+     [0x0172]: d8f80000 00000002          
+0163 [0x0174]:         mov     0b1000,r0
+     [0x0174]: 48188000 00000008          
+0164 [0x0176]:         cmove   0b0000,r0
+     [0x0176]: 60188000 00000000          
+0165 [0x0178]:         or      r0,ncc
+     [0x0178]: 88e00000                   
+0166 [0x0179]: setcc:  cmp     $0,cc
+     [0x0179]: 99b80000 00000000          
+0167 [0x017b]:         je      op
+     [0x017b]: 20198000 00000015          
+0168 [0x017d]:         and     $0xFFFFFFF,pc
+     [0x017d]: 86780000 0fffffff fffffe90 
+0169 [0x0180]:         shl     $28,ncc
+     [0x0180]: c0f80000 0000001c          
+0170 [0x0182]:         or      ncc,pc
+     [0x0182]: 8e638000 fffffe8c          
+0171 [0x0184]:         jmp     op
+     [0x0184]: 08198000 0000000c          
+0172           
+0173                   
+0174 [0x0186]: immed:  mov     ins,expon
+     [0x0186]: 48e70000                   
+0175 [0x0187]:         shr     $26,expon
+     [0x0187]: c8f80000 0000001a          
+0176 [0x0189]:         shl     $6,ins
+     [0x0189]: c1d80000 00000006          
+0177 [0x018b]:         shr     $23,ins         ; ins now has value
+     [0x018b]: c9d80000 00000017          
+0178 [0x018d]:         mov     ins,rvalue
+     [0x018d]: 49270000                   
+0179 [0x018e]:         shl     expon,rvalue
+     [0x018e]: c1238000                   
+0180 [0x018f]:         jmp     op
+     [0x018f]: 08198000 00000001          
+0181           
+WIND Assembly of wave2.s                                                Page 6
+
+Line [ Addr ]
+0182 [0x0191]: op:     mul     $opalign,opcode
+     [0x0191]: b1180000 00000010          
+0183 [0x0193]:         lea     add,r0
+     [0x0193]: 40198000 0000000c          
+0184 [0x0195]:         add     opcode,r0
+     [0x0195]: a0040000                   
+0185 [0x0196]:         mov     r0,rip
+     [0x0196]: 4e400000                   
+0186           
+0187 [0x0197]:         .align opalign
+0188 [0x01a0]: add:    mov     (rreg1),r0
+     [0x01a0]: 480d0000 00000000          
+0189 [0x01a2]:         add     rvalue,r0
+     [0x01a2]: a0048000                   
+0190 [0x01a3]:         mov     ccr,ncc
+     [0x01a3]: 48fa0000                   
+0191 [0x01a4]:         mov     r0,(lreg)
+     [0x01a4]: 4b600000 00000000          
+0192 [0x01a6]:         jmp     setcc1
+     [0x01a6]: 08198000 000001c7          
+0193                   
+0194 [0x01a8]:         .align opalign
+0195 [0x01b0]: addc:   mov     (rreg1),r0
+     [0x01b0]: 480d0000 00000000          
+0196 [0x01b2]:         add     rvalue,r0
+     [0x01b2]: a0048000                   
+0197 [0x01b3]:         test    $0x20000000,pc
+     [0x01b3]: de780000 20000000 fffffe5a 
+0198 [0x01b6]:         mov     $1,r1
+     [0x01b6]: 48380000 00000001          
+0199 [0x01b8]:         cmove   $0,r1
+     [0x01b8]: 60380000 00000000          
+0200 [0x01ba]:         add     r1,r0
+     [0x01ba]: a0008000                   
+0201 [0x01bb]:         mov     ccr,ncc
+     [0x01bb]: 48fa0000                   
+0202 [0x01bc]:         mov     r0,(lreg)
+     [0x01bc]: 4b600000 00000000          
+0203 [0x01be]:         jmp     setcc1
+     [0x01be]: 08198000 000001af          
+0204                   
+0205 [0x01c0]:         .align opalign
+0206 [0x01c0]: sub:    mov     (rreg1),r0
+     [0x01c0]: 480d0000 00000000          
+0207 [0x01c2]:         sub     rvalue,r0
+     [0x01c2]: a8048000                   
+0208 [0x01c3]:         mov     ccr,ncc
+     [0x01c3]: 48fa0000                   
+0209 [0x01c4]:         mov     r0,(lreg)
+     [0x01c4]: 4b600000 00000000          
+0210 [0x01c6]:         jmp     setcc1
+     [0x01c6]: 08198000 000001a7          
+0211           
+0212 [0x01c8]:         .align opalign
+0213 [0x01d0]: cmp:    cmp     rvalue,(rreg1)
+     [0x01d0]: 9b448000 00000000          
+0214 [0x01d2]:         mov     ccr,ncc
+     [0x01d2]: 48fa0000                   
+0215 [0x01d3]:         mov     $1,cc
+     [0x01d3]: 49b80000 00000001          
+WIND Assembly of wave2.s                                                Page 7
+
+Line [ Addr ]
+0216 [0x01d5]:         jmp     setcc1
+     [0x01d5]: 08198000 00000198          
+0217           
+0218 [0x01d7]:         .align opalign
+0219 [0x01e0]: eor:    mov     (rreg1),r0
+     [0x01e0]: 480d0000 00000000          
+0220 [0x01e2]:         xor     rvalue,r0
+     [0x01e2]: 90048000                   
+0221 [0x01e3]:         mov     ccr,ncc
+     [0x01e3]: 48fa0000                   
+0222 [0x01e4]:         mov     r0,(lreg)
+     [0x01e4]: 4b600000 00000000          
+0223 [0x01e6]:         jmp     setcc1
+     [0x01e6]: 08198000 00000187          
+0224                   
+0225 [0x01e8]:         .align opalign
+0226 [0x01f0]: or:     mov     (rreg1),r0
+     [0x01f0]: 480d0000 00000000          
+0227 [0x01f2]:         or      rvalue,r0
+     [0x01f2]: 88048000                   
+0228 [0x01f3]:         mov     ccr,ncc
+     [0x01f3]: 48fa0000                   
+0229 [0x01f4]:         mov     r0,(lreg)
+     [0x01f4]: 4b600000 00000000          
+0230 [0x01f6]:         jmp     setcc1
+     [0x01f6]: 08198000 00000177          
+0231                   
+0232 [0x01f8]:         .align opalign
+0233 [0x0200]: nand:   mov     (rreg1),r0
+     [0x0200]: 480d0000 00000000          
+0234 [0x0202]:         and     rvalue,r0
+     [0x0202]: 80048000                   
+0235 [0x0203]:         mov     ccr,ncc
+     [0x0203]: 48fa0000                   
+0236 [0x0204]:         mov     r0,(lreg)
+     [0x0204]: 4b600000 00000000          
+0237 [0x0206]:         jmp     setcc1
+     [0x0206]: 08198000 00000167          
+0238           
+0239 [0x0208]:         .align opalign
+0240 [0x0210]: test:   mov     (rreg1),r0
+     [0x0210]: 480d0000 00000000          
+0241 [0x0212]:         and     rvalue,r0
+     [0x0212]: 80048000                   
+0242 [0x0213]:         mov     ccr,ncc
+     [0x0213]: 48fa0000                   
+0243 [0x0214]:         jmp     setcc1
+     [0x0214]: 08198000 00000159          
+0244           
+0245 [0x0216]:         .align opalign
+0246 [0x0220]: mul:    mov     (rreg1),r0
+     [0x0220]: 480d0000 00000000          
+0247 [0x0222]:         mul     rvalue,r0
+     [0x0222]: b0048000                   
+0248 [0x0223]:         mov     ccr,ncc
+     [0x0223]: 48fa0000                   
+0249 [0x0224]:         mov     r0,(lreg)
+     [0x0224]: 4b600000 00000000          
+0250 [0x0226]:         jmp     setcc1
+     [0x0226]: 08198000 00000147          
+WIND Assembly of wave2.s                                                Page 8
+
+Line [ Addr ]
+0251           
+0252 [0x0228]:         .align opalign
+0253 [0x0230]: mla:    jmp     add
+     [0x0230]: 08198000 ffffff6f          
+0254           
+0255 [0x0232]:         .align opalign
+0256 [0x0240]: div:    mov     (rreg1),r0
+     [0x0240]: 480d0000 00000000          
+0257 [0x0242]:         div     rvalue,r0
+     [0x0242]: b8048000                   
+0258 [0x0243]:         mov     ccr,ncc
+     [0x0243]: 48fa0000                   
+0259 [0x0244]:         mov     r0,(lreg)
+     [0x0244]: 4b600000 00000000          
+0260 [0x0246]:         jmp     setcc1
+     [0x0246]: 08198000 00000127          
+0261           
+0262 [0x0248]:         .align opalign
+0263 [0x0250]: mov:    mov     rvalue,(lreg)
+     [0x0250]: 4b648000 00000000          
+0264 [0x0252]:         or      $0,(lreg)
+     [0x0252]: 8b780000 00000000 00000000 
+0265 [0x0255]:         mov     ccr,ncc
+     [0x0255]: 48fa0000                   
+0266 [0x0256]:         jmp     setcc1
+     [0x0256]: 08198000 00000117          
+0267           
+0268 [0x0258]:         .align opalign
+0269 [0x0260]: mvn:    mov     rvalue,(lreg)
+     [0x0260]: 4b648000 00000000          
+0270 [0x0262]:         xor     $-1,(lreg)
+     [0x0262]: 93780000 ffffffff 00000000 
+0271 [0x0265]:         mov     ccr,ncc
+     [0x0265]: 48fa0000                   
+0272 [0x0266]:         jmp     setcc1
+     [0x0266]: 08198000 00000107          
+0273           
+0274 [0x0268]:         .align opalign
+0275 [0x0270]: swi:    jmp     swii
+     [0x0270]: 08198000 00000021          
+0276           
+0277 [0x0272]:         .align opalign
+0278 [0x0280]: ldm:    jmp     ldmm
+     [0x0280]: 08198000 0000009a          
+0279                   
+0280 [0x0282]:         .align opalign
+0281 [0x0290]: stm:    jmp     stmm
+     [0x0290]: 08198000 000000af          
+0282                           
+0283           
+0284 [0x0292]: swii:   mul     $swialign,rvalue
+     [0x0292]: b1380000 00000010          
+0285 [0x0294]:         lea     halt,r0
+     [0x0294]: 40198000 0000000b          
+0286 [0x0296]:         add     rvalue,r0
+     [0x0296]: a0048000                   
+0287 [0x0297]:         mov     r0,rip
+     [0x0297]: 4e400000                   
+0288           
+0289 [0x0298]:         .align swialign
+WIND Assembly of wave2.s                                                Page 9
+
+Line [ Addr ]
+0290 [0x02a0]: halt:   trap    $SysHalt
+     [0x02a0]: 00180000 00000000          
+0291                   
+0292 [0x02a2]:         .align  swialign
+0293 [0x02b0]: getc:   trap    $SysGetChar
+     [0x02b0]: 00180000 00000001          
+0294 [0x02b2]:         mov     r0,wr0
+     [0x02b2]: 4e600000 fffffd4d          
+0295 [0x02b4]:         test    $-1,wr0
+     [0x02b4]: de780000 ffffffff fffffd4a 
+0296 [0x02b7]:         mov     ccr,ncc
+     [0x02b7]: 48fa0000                   
+0297 [0x02b8]:         jmp     setcc1
+     [0x02b8]: 08198000 000000b5          
+0298           
+0299 [0x02ba]:         .align swialign
+0300 [0x02c0]: getn:   trap    $SysGetNum
+     [0x02c0]: 00180000 00000002          
+0301 [0x02c2]:         mov     r0,wr0
+     [0x02c2]: 4e600000 fffffd3d          
+0302 [0x02c4]:         test    $-1,wr0
+     [0x02c4]: de780000 ffffffff fffffd3a 
+0303 [0x02c7]:         mov     ccr,ncc
+     [0x02c7]: 48fa0000                   
+0304 [0x02c8]:         jmp     setcc1
+     [0x02c8]: 08198000 000000a5          
+0305           
+0306 [0x02ca]:         .align swialign
+0307 [0x02d0]: putc:   mov     wr0,r0
+     [0x02d0]: 48198000 fffffd2f          
+0308 [0x02d2]:         trap    $SysPutChar
+     [0x02d2]: 00180000 00000003          
+0309 [0x02d4]:         test    $-1,r0
+     [0x02d4]: d8180000 ffffffff          
+0310 [0x02d6]:         mov     ccr,ncc
+     [0x02d6]: 48fa0000                   
+0311 [0x02d7]:         jmp     setcc1
+     [0x02d7]: 08198000 00000096          
+0312           
+0313 [0x02d9]:         .align swialign
+0314 [0x02e0]: putn:   mov     wr0,r0
+     [0x02e0]: 48198000 fffffd1f          
+0315 [0x02e2]:         trap    $SysPutNum
+     [0x02e2]: 00180000 00000004          
+0316 [0x02e4]:         test    $-1,r0
+     [0x02e4]: d8180000 ffffffff          
+0317 [0x02e6]:         mov     ccr,ncc
+     [0x02e6]: 48fa0000                   
+0318 [0x02e7]:         jmp     setcc1
+     [0x02e7]: 08198000 00000086          
+0319           
+0320 [0x02e9]:         .align swialign
+0321 [0x02f0]: entrop: trap    $SysEntropy
+     [0x02f0]: 00180000 00000005          
+0322 [0x02f2]:         mov     r0,wr0
+     [0x02f2]: 4e600000 fffffd0d          
+0323 [0x02f4]:         test    $-1,r0
+     [0x02f4]: d8180000 ffffffff          
+0324 [0x02f6]:         mov     ccr,ncc
+     [0x02f6]: 48fa0000                   
+WIND Assembly of wave2.s                                                Page 10
+
+Line [ Addr ]
+0325 [0x02f7]:         jmp     setcc1
+     [0x02f7]: 08198000 00000076          
+0326           
+0327 [0x02f9]:         .align swialign
+0328 [0x0300]: overl:  lea     WARM,r0
+     [0x0300]: 40198000 00000087          
+0329 [0x0302]:         add     wr0,r0
+     [0x0302]: a0198000 fffffcfd          
+0330 [0x0304]:         trap    $SysOverlay
+     [0x0304]: 00180000 00000006          
+0331 [0x0306]:         test    $-1,r0
+     [0x0306]: d8180000 ffffffff          
+0332 [0x0308]:         mov     ccr,ncc
+     [0x0308]: 48fa0000                   
+0333 [0x0309]:         jmp     setcc1
+     [0x0309]: 08198000 00000064          
+0334                   
+0335 [0x030b]:         .align swialign
+0336 [0x0310]: pla:    mov     wr0,r0
+     [0x0310]: 48198000 fffffcef          
+0337 [0x0312]:         trap    $SysPLA
+     [0x0312]: 00180000 00000007          
+0338 [0x0314]:         mov     r0,wr0
+     [0x0314]: 4e600000 fffffceb          
+0339 [0x0316]:         test    $-1,r0
+     [0x0316]: d8180000 ffffffff          
+0340 [0x0318]:         mov     ccr,ncc
+     [0x0318]: 48fa0000                   
+0341 [0x0319]:         jmp     setcc1
+     [0x0319]: 08198000 00000054          
+0342           
+0343 [0x031b]: ldmm:   mov     $1,r1
+     [0x031b]: 48380000 00000001          
+0344 [0x031d]:         mov     $-1,r0
+     [0x031d]: 48180000 ffffffff          
+0345 [0x031f]: _loop:  add     $1,r0
+     [0x031f]: a0180000 00000001          
+0346 [0x0321]:         cmp     $15,r0
+     [0x0321]: 98180000 0000000f          
+0347 [0x0323]:         je      ldpc
+     [0x0323]: 20198000 0000000d          
+0348 [0x0325]:         test    r1,rvalue
+     [0x0325]: d9208000                   
+0349 [0x0326]:         shl     $1,r1
+     [0x0326]: c0380000 00000001          
+0350 [0x0328]:         je      _loop
+     [0x0328]: 20198000 fffffff6          
+0351 [0x032a]:         mov     WARM(lreg),(r0)
+     [0x032a]: 4a0d8000 00000388 00000000 
+0352 [0x032d]:         add     $1,lreg
+     [0x032d]: a1780000 00000001          
+0353 [0x032f]:         jmp     _loop
+     [0x032f]: 08198000 ffffffef          
+0354           
+0355 [0x0331]: ldpc:   test    $0x8000,rvalue
+     [0x0331]: d9380000 00008000          
+0356 [0x0333]:         je      next
+     [0x0333]: 20198000 00000045          
+0357 [0x0335]:         mov     WARM(lreg),pc
+     [0x0335]: 4e6d8000 00000388 fffffcd8 
+WIND Assembly of wave2.s                                                Page 11
+
+Line [ Addr ]
+0358 [0x0338]:         add     $1,lreg
+     [0x0338]: a1780000 00000001          
+0359 [0x033a]:         test    $-1,pc
+     [0x033a]: de780000 ffffffff fffffcd3 
+0360 [0x033d]:         mov     ccr,ncc
+     [0x033d]: 48fa0000                   
+0361 [0x033e]:         jmp     setcc1
+     [0x033e]: 08198000 0000002f          
+0362           
+0363 [0x0340]: stmm:   mov     $0x8000,r1
+     [0x0340]: 48380000 00008000          
+0364 [0x0342]:         mov     $16,r0
+     [0x0342]: 48180000 00000010          
+0365 [0x0344]: _loop:  sub     $1,r0
+     [0x0344]: a8180000 00000001          
+0366 [0x0346]:         cmp     $-1,r0
+     [0x0346]: 98180000 ffffffff          
+0367 [0x0348]:         je      next
+     [0x0348]: 20198000 00000030          
+0368 [0x034a]:         test    r1,rvalue
+     [0x034a]: d9208000                   
+0369 [0x034b]:         je      _loop
+     [0x034b]: 20198000 fffffff8          
+0370 [0x034d]:         mov     (r0),WARM(lreg)
+     [0x034d]: 4b680000 00000000 00000388 
+0371 [0x0350]:         sub     $1,lreg
+     [0x0350]: a9780000 00000001          
+0372 [0x0352]:         jmp     _loop
+     [0x0352]: 08198000 fffffff1          
+0373                   
+0374 [0x0354]: sb:     shl     $1,ins
+     [0x0354]: c1d80000 00000001          
+0375 [0x0356]:         jl      br
+     [0x0356]: 10198000 00000017          
+0376 [0x0358]:         mov     ins,opcode      ; Get opcode
+     [0x0358]: 49070000                   
+0377 [0x0359]:         shr     $28,opcode
+     [0x0359]: c9180000 0000001c          
+0378 [0x035b]:         mov     ins,lreg        ; Get left reg
+     [0x035b]: 49670000                   
+0379 [0x035c]:         shl     $4,lreg
+     [0x035c]: c1780000 00000004          
+0380 [0x035e]:         shr     $28,lreg
+     [0x035e]: c9780000 0000001c          
+0381 [0x0360]:         mov     ins,rreg1       ; Get right reg
+     [0x0360]: 49470000                   
+0382 [0x0361]:         shl     $8,rreg1
+     [0x0361]: c1580000 00000008          
+0383 [0x0363]:         shr     $28,rreg1
+     [0x0363]: c9580000 0000001c          
+0384 [0x0365]:         shl     $12,ins
+     [0x0365]: c1d80000 0000000c          
+0385 [0x0367]:         jl      indexing
+     [0x0367]: 10198000 00000006          
+0386 [0x0369]:         mov     ins,rvalue
+     [0x0369]: 49270000                   
+0387 [0x036a]:         shl     $1,rvalue
+     [0x036a]: c1380000 00000001          
+0388 [0x036c]:         sar     $18,rvalue
+     [0x036c]: d1380000 00000012          
+WIND Assembly of wave2.s                                                Page 12
+
+Line [ Addr ]
+0389           
+0390                   
+0391 [0x036e]: indexing:
+0392                   
+0393           
+0394           
+0395                   
+0396 [0x036e]: br:
+0397           
+0398           
+0399 [0x036e]: setcc1: cmp     $0,cc
+     [0x036e]: 99b80000 00000000          
+0400 [0x0370]:         je      next
+     [0x0370]: 20198000 00000008          
+0401 [0x0372]:         and     $0xFFFFFFF,pc
+     [0x0372]: 86780000 0fffffff fffffc9b 
+0402 [0x0375]:         shl     $28,ncc
+     [0x0375]: c0f80000 0000001c          
+0403 [0x0377]:         or      ncc,pc
+     [0x0377]: 8e638000 fffffc97          
+0404           
+0405 [0x0379]: next:   add     $1,wpc
+     [0x0379]: a1f80000 00000001          
+0406 [0x037b]:         add     $1,pc
+     [0x037b]: a6780000 00000001 fffffc92 
+0407 [0x037e]:         jmp     get
+     [0x037e]: 08198000 fffffc9e          
+0408                   
+0409           
+0410           
+0411           
+0412 [0x0380]: ccops:  .data   always, nv, eq, ne, lt, le, ge, gt ; Condition co
+     [0x0380]: 0x0000030
+     [0x0381]: 0x0000040
+     [0x0382]: 0x0000050
+     [0x0383]: 0x0000060
+     [0x0384]: 0x0000070
+     [0x0385]: 0x0000080
+     [0x0386]: 0x0000090
+     [0x0387]: 0x00000a0
+0413 [0x0388]: WARM:   
+0414           
+0415           
+0416           
+0417           
+0418           
+0419           
+0420           
+0421           
+0422           
+0423           
+0424           
+0425           
+0426           
+0427           
+0428           
+0429           
+0430           
+0431           
+0432           
+WIND Assembly of wave2.s                                                Page 13
+
+Line [ Addr ]
+0433           
+0434           
+0435           
+0436           
+0437           
+
+-------------------------------------------------------------------------------
+Symbols defined:
+        WARM=904             add=416            addc=432          always=48    
+         asb=172              br=878         ccalign=16            ccops=896   
+         cmp=464             div=576          entrop=752             eor=480   
+          eq=80              eqb=1073741824             ge=144             get=
+        getc=688            getn=704              gt=160            halt=672   
+       immed=390        indexing=878             ldm=640            ldmm=795   
+        ldpc=817              le=128           lregm=125829120            lsl=2
+          lt=112             ltb=-1879048192            mla=560             mov
+         mul=544             mvn=608            nand=512              ne=96    
+        next=889              nv=64               op=401         opalign=16    
+     opcodem=2013265920             or=496           overl=768              pc=
+         pla=784            putc=720            putn=736             ror=352   
+      rreg1m=7864320             sb=852             scc=268435456          setc
+      setcc1=878          setccr=370           shift=221       shopalign=32    
+          sp=13            start=16              stm=656            stmm=832   
+         sub=448             swi=624        swialign=16             swii=658   
+        test=528             wr0=0               wr1=1      
+-------------------------------------------------------------------------------
+Assembled 280 instructions at 1707.32 instructions per second.

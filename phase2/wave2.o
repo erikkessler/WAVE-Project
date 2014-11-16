@@ -1,0 +1,678 @@
+WindObjectFile1
+File wave2.s
+Symbol SysEntropy 5
+Symbol SysGetChar 1
+Symbol SysGetNum 2
+Symbol SysHalt 0
+Symbol SysOverlay 6
+Symbol SysPLA 7
+Symbol SysPutChar 3
+Symbol SysPutNum 4
+Symbol WARM 904
+Symbol add 416
+Symbol addc 432
+Symbol always 48
+Symbol asb 172
+Symbol br 878
+Symbol ccalign 16
+Symbol ccops 896
+Symbol cmp 464
+Symbol div 576
+Symbol entrop 752
+Symbol eor 480
+Symbol eq 80
+Symbol eqb 1073741824
+Symbol ge 144
+Symbol get 29
+Symbol getc 688
+Symbol getn 704
+Symbol gt 160
+Symbol halt 672
+Symbol immed 390
+Symbol indexing 878
+Symbol ldm 640
+Symbol ldmm 795
+Symbol ldpc 817
+Symbol le 128
+Symbol lregm 125829120
+Symbol lsl 256
+Symbol lt 112
+Symbol ltb -1879048192
+Symbol mla 560
+Symbol mov 592
+Symbol mul 544
+Symbol mvn 608
+Symbol nand 512
+Symbol ne 96
+Symbol next 889
+Symbol nv 64
+Symbol op 401
+Symbol opalign 16
+Symbol opcodem 2013265920
+Symbol or 496
+Symbol overl 768
+Symbol pc 15
+Symbol pla 784
+Symbol putc 720
+Symbol putn 736
+Symbol ror 352
+Symbol rreg1m 7864320
+Symbol sb 852
+Symbol scc 268435456
+Symbol setcc 377
+Symbol setcc1 878
+Symbol setccr 370
+Symbol shift 221
+Symbol shopalign 32
+Symbol sp 13
+Symbol start 16
+Symbol stm 656
+Symbol stmm 832
+Symbol sub 448
+Symbol swi 624
+Symbol swialign 16
+Symbol swii 658
+Symbol test 528
+Symbol wr0 0
+Symbol wr1 1
+Register arthss 7
+Register cc 13
+Register expon 7
+Register ins 14
+Register lreg 11
+Register ncc 7
+Register opcode 8
+Register r0 0
+Register r1 1
+Register r10 10
+Register r11 11
+Register r12 12
+Register r13 13
+Register r14 14
+Register r15 15
+Register r2 2
+Register r3 3
+Register r4 4
+Register r5 5
+Register r6 6
+Register r7 7
+Register r8 8
+Register r9 9
+Register rbp 6
+Register rip 16
+Register rreg1 10
+Register rsp 7
+Register rvalue 9
+Register shiftcount 5
+Register shop 7
+Register srcr2 6
+Register wpc 15
+Memory 380 30
+Memory 381 40
+Memory 382 50
+Memory 383 60
+Memory 384 70
+Memory 385 80
+Memory 386 90
+Memory 387 a0
+Memory 0 8198000 f
+Memory 10 4e780000 ffffff fffffffb
+Memory 13 4e780000 0 ffffffeb
+Memory 16 4e780000 0 ffffffe9
+Memory 19 40198000 36e
+Memory 1b 180000 6
+Memory 1d 49cf8000 388
+Memory 1f 49a70000
+Memory 20 c9b80000 1d
+Memory 22 40198000 35d
+Memory 24 a0068000
+Memory 25 4e480000 0
+Memory 30 8198000 7b
+Memory 40 8198000 338
+Memory 50 49b98000 ffffffbe
+Memory 52 d9b80000 40000000
+Memory 54 20198000 324
+Memory 56 8198000 55
+Memory 60 49b98000 ffffffae
+Memory 62 d9b80000 40000000
+Memory 64 28198000 314
+Memory 66 8198000 45
+Memory 70 49b98000 ffffff9e
+Memory 72 81b80000 90000000
+Memory 74 20198000 304
+Memory 76 99b80000 90000000
+Memory 78 20198000 300
+Memory 7a 8198000 31
+Memory 80 49b98000 ffffff8e
+Memory 82 81b80000 90000000
+Memory 84 20198000 2f4
+Memory 86 99b80000 90000000
+Memory 88 20198000 2f0
+Memory 8a 8198000 ffffffc5
+Memory 90 49b98000 ffffff7e
+Memory 92 81b80000 90000000
+Memory 94 20198000 17
+Memory 96 99b80000 90000000
+Memory 98 20198000 13
+Memory 9a 8198000 2de
+Memory a0 49b98000 ffffff6e
+Memory a2 81b80000 90000000
+Memory a4 20198000 ffffffbb
+Memory a6 99b98000 8fffff59
+Memory a8 20198000 ffffffb7
+Memory aa 8198000 2ce
+Memory ac 49a70000
+Memory ad 81b80000 10000000
+Memory af c1d80000 4
+Memory b1 10198000 2a2
+Memory b3 49070000
+Memory b4 81180000 78000000
+Memory b6 c9180000 1b
+Memory b8 49670000
+Memory b9 81780000 7800000
+Memory bb c9780000 17
+Memory bd 49470000
+Memory be 81580000 780000
+Memory c0 c9580000 13
+Memory c2 c1d80000 d
+Memory c4 30198000 c1
+Memory c6 48e70000
+Memory c7 c8f80000 1d
+Memory c9 48c70000
+Memory ca c0d80000 5
+Memory cc c8d80000 1c
+Memory ce 48a70000
+Memory cf c0b80000 9
+Memory d1 c8b80000 1a
+Memory d3 492b0000 0
+Memory d5 98f80000 6
+Memory d7 10198000 5
+Memory d9 b12a8000 0
+Memory db 8198000 b5
+Memory dd 98f80000 5
+Memory df 60aa8000 0
+Memory e1 48e70000
+Memory e2 c0f80000 3
+Memory e4 c8f80000 1e
+Memory e6 b0f80000 20
+Memory e8 40198000 17
+Memory ea a0038000
+Memory eb 4e400000
+Memory 100 c1228000
+Memory 101 48f98000 ffffff0d
+Memory 103 8198000 75
+Memory 120 c9228000
+Memory 121 48f98000 fffffeed
+Memory 123 8198000 55
+Memory 140 d1228000
+Memory 141 48f98000 fffffecd
+Memory 143 8198000 35
+Memory 160 98b80000 0
+Memory 162 18198000 f
+Memory 164 c9380000 1
+Memory 166 48fa0000
+Memory 167 d8f80000 2
+Memory 169 48180000 80000000
+Memory 16b 60180000 0
+Memory 16d a1200000
+Memory 16e a8b80000 1
+Memory 170 8198000 ffffffef
+Memory 172 d8f80000 2
+Memory 174 48188000 8
+Memory 176 60188000 0
+Memory 178 88e00000
+Memory 179 99b80000 0
+Memory 17b 20198000 15
+Memory 17d 86780000 fffffff fffffe90
+Memory 180 c0f80000 1c
+Memory 182 8e638000 fffffe8c
+Memory 184 8198000 c
+Memory 186 48e70000
+Memory 187 c8f80000 1a
+Memory 189 c1d80000 6
+Memory 18b c9d80000 17
+Memory 18d 49270000
+Memory 18e c1238000
+Memory 18f 8198000 1
+Memory 191 b1180000 10
+Memory 193 40198000 c
+Memory 195 a0040000
+Memory 196 4e400000
+Memory 1a0 480d0000 0
+Memory 1a2 a0048000
+Memory 1a3 48fa0000
+Memory 1a4 4b600000 0
+Memory 1a6 8198000 1c7
+Memory 1b0 480d0000 0
+Memory 1b2 a0048000
+Memory 1b3 de780000 20000000 fffffe5a
+Memory 1b6 48380000 1
+Memory 1b8 60380000 0
+Memory 1ba a0008000
+Memory 1bb 48fa0000
+Memory 1bc 4b600000 0
+Memory 1be 8198000 1af
+Memory 1c0 480d0000 0
+Memory 1c2 a8048000
+Memory 1c3 48fa0000
+Memory 1c4 4b600000 0
+Memory 1c6 8198000 1a7
+Memory 1d0 9b448000 0
+Memory 1d2 48fa0000
+Memory 1d3 49b80000 1
+Memory 1d5 8198000 198
+Memory 1e0 480d0000 0
+Memory 1e2 90048000
+Memory 1e3 48fa0000
+Memory 1e4 4b600000 0
+Memory 1e6 8198000 187
+Memory 1f0 480d0000 0
+Memory 1f2 88048000
+Memory 1f3 48fa0000
+Memory 1f4 4b600000 0
+Memory 1f6 8198000 177
+Memory 200 480d0000 0
+Memory 202 80048000
+Memory 203 48fa0000
+Memory 204 4b600000 0
+Memory 206 8198000 167
+Memory 210 480d0000 0
+Memory 212 80048000
+Memory 213 48fa0000
+Memory 214 8198000 159
+Memory 220 480d0000 0
+Memory 222 b0048000
+Memory 223 48fa0000
+Memory 224 4b600000 0
+Memory 226 8198000 147
+Memory 230 8198000 ffffff6f
+Memory 240 480d0000 0
+Memory 242 b8048000
+Memory 243 48fa0000
+Memory 244 4b600000 0
+Memory 246 8198000 127
+Memory 250 4b648000 0
+Memory 252 8b780000 0 0
+Memory 255 48fa0000
+Memory 256 8198000 117
+Memory 260 4b648000 0
+Memory 262 93780000 ffffffff 0
+Memory 265 48fa0000
+Memory 266 8198000 107
+Memory 270 8198000 21
+Memory 280 8198000 9a
+Memory 290 8198000 af
+Memory 292 b1380000 10
+Memory 294 40198000 b
+Memory 296 a0048000
+Memory 297 4e400000
+Memory 2a0 180000 0
+Memory 2b0 180000 1
+Memory 2b2 4e600000 fffffd4d
+Memory 2b4 de780000 ffffffff fffffd4a
+Memory 2b7 48fa0000
+Memory 2b8 8198000 b5
+Memory 2c0 180000 2
+Memory 2c2 4e600000 fffffd3d
+Memory 2c4 de780000 ffffffff fffffd3a
+Memory 2c7 48fa0000
+Memory 2c8 8198000 a5
+Memory 2d0 48198000 fffffd2f
+Memory 2d2 180000 3
+Memory 2d4 d8180000 ffffffff
+Memory 2d6 48fa0000
+Memory 2d7 8198000 96
+Memory 2e0 48198000 fffffd1f
+Memory 2e2 180000 4
+Memory 2e4 d8180000 ffffffff
+Memory 2e6 48fa0000
+Memory 2e7 8198000 86
+Memory 2f0 180000 5
+Memory 2f2 4e600000 fffffd0d
+Memory 2f4 d8180000 ffffffff
+Memory 2f6 48fa0000
+Memory 2f7 8198000 76
+Memory 300 40198000 87
+Memory 302 a0198000 fffffcfd
+Memory 304 180000 6
+Memory 306 d8180000 ffffffff
+Memory 308 48fa0000
+Memory 309 8198000 64
+Memory 310 48198000 fffffcef
+Memory 312 180000 7
+Memory 314 4e600000 fffffceb
+Memory 316 d8180000 ffffffff
+Memory 318 48fa0000
+Memory 319 8198000 54
+Memory 31b 48380000 1
+Memory 31d 48180000 ffffffff
+Memory 31f a0180000 1
+Memory 321 98180000 f
+Memory 323 20198000 d
+Memory 325 d9208000
+Memory 326 c0380000 1
+Memory 328 20198000 fffffff6
+Memory 32a 4a0d8000 388 0
+Memory 32d a1780000 1
+Memory 32f 8198000 ffffffef
+Memory 331 d9380000 8000
+Memory 333 20198000 45
+Memory 335 4e6d8000 388 fffffcd8
+Memory 338 a1780000 1
+Memory 33a de780000 ffffffff fffffcd3
+Memory 33d 48fa0000
+Memory 33e 8198000 2f
+Memory 340 48380000 8000
+Memory 342 48180000 10
+Memory 344 a8180000 1
+Memory 346 98180000 ffffffff
+Memory 348 20198000 30
+Memory 34a d9208000
+Memory 34b 20198000 fffffff8
+Memory 34d 4b680000 0 388
+Memory 350 a9780000 1
+Memory 352 8198000 fffffff1
+Memory 354 c1d80000 1
+Memory 356 10198000 17
+Memory 358 49070000
+Memory 359 c9180000 1c
+Memory 35b 49670000
+Memory 35c c1780000 4
+Memory 35e c9780000 1c
+Memory 360 49470000
+Memory 361 c1580000 8
+Memory 363 c9580000 1c
+Memory 365 c1d80000 c
+Memory 367 10198000 6
+Memory 369 49270000
+Memory 36a c1380000 1
+Memory 36c d1380000 12
+Memory 36e 99b80000 0
+Memory 370 20198000 8
+Memory 372 86780000 fffffff fffffc9b
+Memory 375 c0f80000 1c
+Memory 377 8e638000 fffffc97
+Memory 379 a1f80000 1
+Memory 37b a6780000 1 fffffc92
+Memory 37e 8198000 fffffc9e
+Source 0         jmp     start
+Source 10 start:  mov     $0x00ffffff,sp  ; Set sp to the highest value
+Source 13         mov     $0,wr0
+Source 16         mov     $0,wr1
+Source 19         lea     WARM,r0         
+Source 1b         trap    $SysOverlay     ; Load warm code into memory
+Source 1d get:    mov     WARM(wpc),ins   ; Get instruction
+Source 1f         mov     ins,cc          ; Get the instructions conditions
+Source 20         shr     $29,cc          ; cc low 3 bits
+Source 22         lea     ccops,r0
+Source 24         add     cc,r0
+Source 25         mov     (r0),rip
+Source 30 always: jmp     asb
+Source 40 nv:     jmp     next
+Source 50 eq:     mov     pc,cc
+Source 52         test    $eqb,cc
+Source 54         je      next
+Source 56         jmp     asb
+Source 60 ne:     mov     pc,cc
+Source 62         test    $eqb,cc
+Source 64         jne     next
+Source 66         jmp     asb
+Source 70 lt:     mov     pc,cc
+Source 72         and     $ltb,cc
+Source 74         je      next
+Source 76         cmp     $ltb,cc
+Source 78         je      next
+Source 7a         jmp     asb
+Source 80 le:     mov     pc,cc
+Source 82         and     $ltb,cc
+Source 84         je      next
+Source 86         cmp     $ltb,cc
+Source 88         je      next
+Source 8a         jmp     eq
+Source 90 ge:     mov     pc,cc
+Source 92         and     $ltb,cc
+Source 94         je      asb
+Source 96         cmp     $ltb,cc
+Source 98         je      asb
+Source 9a         jmp     next
+Source a0 gt:     mov     pc,cc
+Source a2         and     $ltb,cc
+Source a4         je      ne
+Source a6         cmp     ltb,cc
+Source a8         je      ne
+Source aa         jmp     next
+Source ac asb:    mov     ins,cc          ; Store if need to set cc
+Source ad         and     $scc,cc
+Source af         shl     $4,ins
+Source b1         jl      sb              ; It load/store or branch
+Source b3         mov     ins,opcode      ; Get opcode
+Source b4         and     $opcodem,opcode
+Source b6         shr     $27,opcode
+Source b8         mov     ins,lreg        ; Get left reg
+Source b9         and     $lregm,lreg
+Source bb         shr     $23,lreg
+Source bd         mov     ins,rreg1       ; Get right reg
+Source be         and     $rreg1m,rreg1
+Source c0         shr     $19,rreg1
+Source c2         shl     $13,ins
+Source c4         jge     immed           ; immediate
+Source c6         mov     ins,arthss
+Source c7         shr     $29,arthss
+Source c9         mov     ins,srcr2
+Source ca         shl     $5,srcr2
+Source cc         shr     $28,srcr2       ; src reg 2
+Source ce         mov     ins,shiftcount
+Source cf         shl     $9,shiftcount
+Source d1         shr     $26,shiftcount  ; shiftcount
+Source d3         mov     (srcr2),rvalue
+Source d5         cmp     $6,arthss       ; reg product?
+Source d7         jl      shift
+Source d9         mul     (shiftcount),rvalue ; reg product
+Source db         jmp     op
+Source dd shift:  cmp     $0b101,arthss
+Source df         cmove   (shiftcount),shiftcount 
+Source e1         mov     ins,shop        ; need shop
+Source e2         shl     $3,shop
+Source e4         shr     $30,shop
+Source e6         mul     $shopalign,shop
+Source e8         lea     lsl,r0
+Source ea         add     shop,r0
+Source eb         mov     r0,rip
+Source 100 lsl:    shl     shiftcount,rvalue
+Source 101         mov     pc,ncc
+Source 103         jmp     setcc
+Source 120         shr     shiftcount,rvalue
+Source 121         mov     pc,ncc
+Source 123         jmp     setcc
+Source 140         sar     shiftcount,rvalue
+Source 141         mov     pc,ncc
+Source 143         jmp     setcc
+Source 160 ror:    cmp     $0,shiftcount
+Source 162         jle     setccr
+Source 164         shr     $1,rvalue
+Source 166         mov     ccr,ncc
+Source 167         test    $2,ncc
+Source 169         mov     $0x80000000,r0
+Source 16b         cmove   $0,r0
+Source 16d         add     r0,rvalue
+Source 16e         sub     $1,shiftcount
+Source 170         jmp     ror
+Source 172 setccr: test    $2,ncc
+Source 174         mov     0b1000,r0
+Source 176         cmove   0b0000,r0
+Source 178         or      r0,ncc
+Source 179 setcc:  cmp     $0,cc
+Source 17b         je      op
+Source 17d         and     $0xFFFFFFF,pc
+Source 180         shl     $28,ncc
+Source 182         or      ncc,pc
+Source 184         jmp     op
+Source 186 immed:  mov     ins,expon
+Source 187         shr     $26,expon
+Source 189         shl     $6,ins
+Source 18b         shr     $23,ins         ; ins now has value
+Source 18d         mov     ins,rvalue
+Source 18e         shl     expon,rvalue
+Source 18f         jmp     op
+Source 191 op:     mul     $opalign,opcode
+Source 193         lea     add,r0
+Source 195         add     opcode,r0
+Source 196         mov     r0,rip
+Source 1a0 add:    mov     (rreg1),r0
+Source 1a2         add     rvalue,r0
+Source 1a3         mov     ccr,ncc
+Source 1a4         mov     r0,(lreg)
+Source 1a6         jmp     setcc1
+Source 1b0 addc:   mov     (rreg1),r0
+Source 1b2         add     rvalue,r0
+Source 1b3         test    $0x20000000,pc
+Source 1b6         mov     $1,r1
+Source 1b8         cmove   $0,r1
+Source 1ba         add     r1,r0
+Source 1bb         mov     ccr,ncc
+Source 1bc         mov     r0,(lreg)
+Source 1be         jmp     setcc1
+Source 1c0 sub:    mov     (rreg1),r0
+Source 1c2         sub     rvalue,r0
+Source 1c3         mov     ccr,ncc
+Source 1c4         mov     r0,(lreg)
+Source 1c6         jmp     setcc1
+Source 1d0 cmp:    cmp     rvalue,(rreg1)
+Source 1d2         mov     ccr,ncc
+Source 1d3         mov     $1,cc
+Source 1d5         jmp     setcc1
+Source 1e0 eor:    mov     (rreg1),r0
+Source 1e2         xor     rvalue,r0
+Source 1e3         mov     ccr,ncc
+Source 1e4         mov     r0,(lreg)
+Source 1e6         jmp     setcc1
+Source 1f0 or:     mov     (rreg1),r0
+Source 1f2         or      rvalue,r0
+Source 1f3         mov     ccr,ncc
+Source 1f4         mov     r0,(lreg)
+Source 1f6         jmp     setcc1
+Source 200 nand:   mov     (rreg1),r0
+Source 202         and     rvalue,r0
+Source 203         mov     ccr,ncc
+Source 204         mov     r0,(lreg)
+Source 206         jmp     setcc1
+Source 210 test:   mov     (rreg1),r0
+Source 212         and     rvalue,r0
+Source 213         mov     ccr,ncc
+Source 214         jmp     setcc1
+Source 220 mul:    mov     (rreg1),r0
+Source 222         mul     rvalue,r0
+Source 223         mov     ccr,ncc
+Source 224         mov     r0,(lreg)
+Source 226         jmp     setcc1
+Source 230 mla:    jmp     add
+Source 240 div:    mov     (rreg1),r0
+Source 242         div     rvalue,r0
+Source 243         mov     ccr,ncc
+Source 244         mov     r0,(lreg)
+Source 246         jmp     setcc1
+Source 250 mov:    mov     rvalue,(lreg)
+Source 252         or      $0,(lreg)
+Source 255         mov     ccr,ncc
+Source 256         jmp     setcc1
+Source 260 mvn:    mov     rvalue,(lreg)
+Source 262         xor     $-1,(lreg)
+Source 265         mov     ccr,ncc
+Source 266         jmp     setcc1
+Source 270 swi:    jmp     swii
+Source 280 ldm:    jmp     ldmm
+Source 290 stm:    jmp     stmm
+Source 292 swii:   mul     $swialign,rvalue
+Source 294         lea     halt,r0
+Source 296         add     rvalue,r0
+Source 297         mov     r0,rip
+Source 2a0 halt:   trap    $SysHalt
+Source 2b0 getc:   trap    $SysGetChar
+Source 2b2         mov     r0,wr0
+Source 2b4         test    $-1,wr0
+Source 2b7         mov     ccr,ncc
+Source 2b8         jmp     setcc1
+Source 2c0 getn:   trap    $SysGetNum
+Source 2c2         mov     r0,wr0
+Source 2c4         test    $-1,wr0
+Source 2c7         mov     ccr,ncc
+Source 2c8         jmp     setcc1
+Source 2d0 putc:   mov     wr0,r0
+Source 2d2         trap    $SysPutChar
+Source 2d4         test    $-1,r0
+Source 2d6         mov     ccr,ncc
+Source 2d7         jmp     setcc1
+Source 2e0 putn:   mov     wr0,r0
+Source 2e2         trap    $SysPutNum
+Source 2e4         test    $-1,r0
+Source 2e6         mov     ccr,ncc
+Source 2e7         jmp     setcc1
+Source 2f0 entrop: trap    $SysEntropy
+Source 2f2         mov     r0,wr0
+Source 2f4         test    $-1,r0
+Source 2f6         mov     ccr,ncc
+Source 2f7         jmp     setcc1
+Source 300 overl:  lea     WARM,r0
+Source 302         add     wr0,r0
+Source 304         trap    $SysOverlay
+Source 306         test    $-1,r0
+Source 308         mov     ccr,ncc
+Source 309         jmp     setcc1
+Source 310 pla:    mov     wr0,r0
+Source 312         trap    $SysPLA
+Source 314         mov     r0,wr0
+Source 316         test    $-1,r0
+Source 318         mov     ccr,ncc
+Source 319         jmp     setcc1
+Source 31b ldmm:   mov     $1,r1
+Source 31d         mov     $-1,r0
+Source 31f _loop:  add     $1,r0
+Source 321         cmp     $15,r0
+Source 323         je      ldpc
+Source 325         test    r1,rvalue
+Source 326         shl     $1,r1
+Source 328         je      _loop
+Source 32a         mov     WARM(lreg),(r0)
+Source 32d         add     $1,lreg
+Source 32f         jmp     _loop
+Source 331 ldpc:   test    $0x8000,rvalue
+Source 333         je      next
+Source 335         mov     WARM(lreg),pc
+Source 338         add     $1,lreg
+Source 33a         test    $-1,pc
+Source 33d         mov     ccr,ncc
+Source 33e         jmp     setcc1
+Source 340 stmm:   mov     $0x8000,r1
+Source 342         mov     $16,r0
+Source 344 _loop:  sub     $1,r0
+Source 346         cmp     $-1,r0
+Source 348         je      next
+Source 34a         test    r1,rvalue
+Source 34b         je      _loop
+Source 34d         mov     (r0),WARM(lreg)
+Source 350         sub     $1,lreg
+Source 352         jmp     _loop
+Source 354 sb:     shl     $1,ins
+Source 356         jl      br
+Source 358         mov     ins,opcode      ; Get opcode
+Source 359         shr     $28,opcode
+Source 35b         mov     ins,lreg        ; Get left reg
+Source 35c         shl     $4,lreg
+Source 35e         shr     $28,lreg
+Source 360         mov     ins,rreg1       ; Get right reg
+Source 361         shl     $8,rreg1
+Source 363         shr     $28,rreg1
+Source 365         shl     $12,ins
+Source 367         jl      indexing
+Source 369         mov     ins,rvalue
+Source 36a         shl     $1,rvalue
+Source 36c         sar     $18,rvalue
+Source 36e setcc1: cmp     $0,cc
+Source 370         je      next
+Source 372         and     $0xFFFFFFF,pc
+Source 375         shl     $28,ncc
+Source 377         or      ncc,pc
+Source 379 next:   add     $1,wpc
+Source 37b         add     $1,pc
+Source 37e         jmp     get
+End
